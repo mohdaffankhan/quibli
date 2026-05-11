@@ -1,0 +1,297 @@
+@import "tailwindcss";
+
+/* Enable dark mode via a `.dark` class on the html element.
+   The ThemeProvider toggles this class based on user preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tokens consumed by Tailwind utilities. The `inline` keyword tells Tailwind
+   not to resolve the var() at build time, so utilities respect runtime
+   theme changes. The actual values live on :root / .dark below. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-hairline: var(--hairline);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-ring: var(--accent-ring);
+  --color-on-accent: var(--on-accent);
+
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-danger: var(--danger);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-danger-solid: var(--danger-solid);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --font-sans:
+    "Inter var", "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:
+    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-display:
+    "Inter var", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --default-transition-duration: 180ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root {
+  color-scheme: light;
+
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --surface-2: #f1f5f3;
+  --surface-3: #e6ece9;
+  --fg: #0e1511;
+  --muted: #4a5047;
+  --subtle: #7a857d;
+  --border: #e2e8f0;
+  --border-strong: #cbd5d0;
+  --hairline: #eef2f0;
+
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-active: #047857;
+  --accent-subtle: #d1fae5;
+  --accent-ring: #6ee7b7;
+  --on-accent: #ffffff;
+
+  --success: #16a34a;
+  --success-subtle: #dcfce7;
+  --warning: #d97706;
+  --warning-subtle: #fef3c7;
+  --danger: #dc2626;
+  --danger-subtle: #fee2e2;
+  --danger-solid: #dc2626;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 1px 4px rgba(15, 23, 42, 0.08), 0 24px 48px rgba(15, 23, 42, 0.06);
+
+  --shadow-card: 0 0 0 1px var(--border), 0 1px 2px rgba(15, 23, 42, 0.04);
+
+  --emerald-glow: 0 4px 20px -2px color-mix(in srgb, var(--accent) 18%, transparent);
+  --emerald-shadow: 0 10px 30px -10px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --bg: #0e1511;
+  --surface: #161d19;
+  --surface-2: #1a211d;
+  --surface-3: #242c27;
+  --fg: #dde4dd;
+  --muted: #bbcabf;
+  --subtle: #86948a;
+  --border: #2f3632;
+  --border-strong: #3c4a42;
+  --hairline: #242c27;
+
+  --accent: #4edea3;
+  --accent-hover: #6ffbbe;
+  --accent-active: #34c98c;
+  --accent-subtle: rgba(78, 222, 163, 0.12);
+  --accent-ring: rgba(78, 222, 163, 0.35);
+  --on-accent: #003824;
+
+  --success: #4edea3;
+  --success-subtle: rgba(78, 222, 163, 0.14);
+  --warning: #f5b87a;
+  --warning-subtle: rgba(245, 184, 122, 0.14);
+  --danger: #ffb4ab;
+  --danger-subtle: rgba(255, 180, 171, 0.14);
+  --danger-solid: #e5484d;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 1px 4px rgba(0, 0, 0, 0.5), 0 24px 48px rgba(0, 0, 0, 0.4);
+
+  --shadow-card: 0 0 0 1px var(--border), 0 1px 2px rgba(0, 0, 0, 0.3);
+
+  --emerald-glow: 0 4px 20px -2px color-mix(in srgb, var(--accent) 22%, transparent);
+  --emerald-shadow: 0 10px 30px -10px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "cv11", "ss01", "ss03";
+    background: var(--bg);
+    color: var(--fg);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 28%, transparent);
+    color: var(--fg);
+  }
+
+  .bg-dot {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklab, var(--fg) 8%, transparent) 1px,
+      transparent 0
+    );
+    background-size: 24px 24px;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--fg) 5%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--fg) 5%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 32px 32px;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+    font-feature-settings: "ss02", "cv01";
+  }
+
+  .ring-accent-focus {
+    @apply outline-none ring-2 ring-offset-2 ring-[--color-accent] ring-offset-[--color-bg];
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.35;
+    }
+  }
+  .pulse-dot {
+    animation: pulse-dot 1.6s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes slide-up-fade {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .anim-in {
+    animation: slide-up-fade 240ms cubic-bezier(0.2, 0, 0, 1) both;
+  }
+
+  @keyframes bar-grow {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+  .anim-bar {
+    transform-origin: bottom;
+    animation: bar-grow 600ms cubic-bezier(0.2, 0, 0, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+@layer utilities {
+  .card-hairline {
+    box-shadow: var(--shadow-card);
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  .emerald-glow {
+    box-shadow: var(--emerald-glow);
+  }
+  .emerald-shadow {
+    box-shadow: var(--emerald-shadow);
+  }
+  .glass-panel {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
+  .glass-card {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--surface-2) 55%, transparent);
+  }
+
+  .bg-radial-emerald {
+    background-image: radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--accent) 18%, transparent),
+      transparent 60%
+    );
+  }
+}

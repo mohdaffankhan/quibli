@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Brand } from "@/components/shell/Brand";
 import { cn } from "@/lib/utils";
+import { API_BASE } from "@/lib/api";
 
 interface AuthLayoutProps {
   title: string;
@@ -113,7 +114,7 @@ export function SentinelButton() {
         </span>
         <div className="h-px flex-1 bg-hairline" />
       </div>
-      <a href="/auth/sentinel/login" className="block">
+      <a href={`${API_BASE}/auth/sentinel/login`} className="block">
         <Button variant="secondary" size="lg" className="w-full" type="button">
           <SentinelLogo />
           Continue with Sentinel

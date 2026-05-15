@@ -14,7 +14,10 @@ import type {
 // In production the frontend (Vercel) and backend (separate host) live on
 // different origins, so every request is prefixed with this. In local dev it
 // is empty, keeping paths same-origin so the Vite proxy can forward them.
-const API_BASE = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
+export const API_BASE = (import.meta.env.VITE_API_URL ?? "").replace(
+  /\/+$/,
+  "",
+);
 
 export class ApiError extends Error {
   status: number;

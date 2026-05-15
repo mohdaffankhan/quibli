@@ -11,6 +11,11 @@ import type {
   UpdatePollInput,
 } from "./types";
 
+// In production the frontend (Vercel) and backend (separate host) live on
+// different origins, so every request is prefixed with this. In local dev it
+// is empty, keeping paths same-origin so the Vite proxy can forward them.
+const API_BASE = (import.meta.env.VITE_API_URL ?? "").replace(/\/+$/, "");
+
 export class ApiError extends Error {
   status: number;
   code: string;
@@ -42,7 +47,7 @@ async function refreshAccess(): Promise<boolean> {
   if (refreshPromise) return refreshPromise;
   refreshPromise = (async () => {
     try {
-      const res = await fetch("/auth/refresh", {
+      const res = await fetch(`${API_BASE}/auth/refresh`, {
         method: "POST",
         credentials: "include",
       });
@@ -70,7 +75,7 @@ async function rawRequest<T>(
   };
   if (opts.signal) init.signal = opts.signal;
 
-  const res = await fetch(path, init);
+  const res = await fetch(`${API_BASE}${path}`, init);
 
   if (res.status === 204) return undefined as T;
 

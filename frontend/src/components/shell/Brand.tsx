@@ -8,8 +8,8 @@ interface BrandProps {
 }
 
 const SIZES = {
-  sm: { box: "h-6 w-6", text: "text-[13px]" },
-  md: { box: "h-7 w-7", text: "text-[15px]" },
+  sm: { box: "h-8 w-8", text: "text-[15px]" },
+  md: { box: "h-10 w-10", text: "text-[18px]" },
 } as const;
 
 /**
@@ -23,8 +23,8 @@ export function Brand({ size = "md", className, iconOnly }: BrandProps) {
       <img
         src="/quibli-mark.png"
         alt="Quibli"
-        width={28}
-        height={28}
+        width={40}
+        height={40}
         loading="eager"
         decoding="async"
         className={cn(s.box, "object-contain")}
